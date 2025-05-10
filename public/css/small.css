@@ -1,0 +1,27 @@
+@media screen and (max-width: 640px) {
+
+    body{
+        width: 100%;
+        margin: 0;
+        border: none;
+    }
+
+    header{
+        margin-top: 5px;
+    }
+
+    
+
+    .detail{
+        grid-template-columns: 1fr;
+    }
+
+    .display{
+        width: 70%;
+    }
+
+    .info{
+        margin: 0;
+    }
+
+}

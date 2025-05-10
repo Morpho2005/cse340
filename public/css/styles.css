@@ -4,3 +4,109 @@
 *:after {
   box-sizing: border-box;
 }
+
+body{
+  width: 90%;
+  padding: 7px;
+  margin: 0 5%;
+  border: 3px solid black;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+}
+
+figure{
+  margin: 0;
+}
+
+
+.detail{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+
+.display{
+  position: absolute; 
+}
+
+.info{
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: rgba(255, 255, 255, 0.368);
+  position: relative;
+  width: 15rem;
+  padding: 1rem;
+  margin-bottom: 3rem;  
+}
+
+.info button{
+  background-color: rgb(0, 203, 203);
+  margin: 10px 0;
+  padding: 10px;
+  font-size: larger;
+}
+
+.navigation{
+  background-color: black;
+}
+
+.navigation ul{
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  color: white;
+}
+
+.navigation li{
+  padding: 10px;
+  font-size: x-large;
+}
+
+.review{
+  display: flex;
+  flex-direction: column;
+}
+
+.review li{
+  margin: 10px 0;
+}
+
+.siteName{
+  margin: 1rem 0;
+  font-size: xx-large;
+}
+
+.upgrades{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.upgrades li{
+  margin: 10px;
+}
+
+.upgrades li figure{
+  width: 160px;
+  height: 100px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  background-color: rgb(0, 203, 203);
+  border: 3px solid black;
+}
+
+.upgrades li a{
+  text-decoration: underline;
+}

@@ -119,3 +119,7 @@ figure{
 .upgrades li a{
   text-decoration: underline;
 }
+
+#tools {
+  padding: 10px;
+}

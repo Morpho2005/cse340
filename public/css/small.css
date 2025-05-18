@@ -10,8 +10,6 @@
         margin-top: 5px;
     }
 
-    
-
     .detail{
         grid-template-columns: 1fr;
     }
@@ -24,4 +22,11 @@
         margin: 0;
     }
 
+    .navigation li{
+        font-size: 100%;
+    }
+
+    .upgrades{
+        max-width: 100%;
+    }
 }

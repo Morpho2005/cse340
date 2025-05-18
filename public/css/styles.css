@@ -64,6 +64,7 @@ figure{
   display: flex;
   justify-content: space-around;
   color: white;
+  padding: 0;
 }
 
 .navigation li{

@@ -10,6 +10,10 @@
         margin-top: 5px;
     }
 
+    section{
+        width: 100%;
+    }
+
     .detail{
         grid-template-columns: 1fr;
     }
@@ -28,5 +32,13 @@
 
     .upgrades{
         max-width: 100%;
+    }
+
+    .upgrades li{
+        width: 35%;
+    }
+
+    .upgrades li figure{
+        width: 100%;
     }
 }

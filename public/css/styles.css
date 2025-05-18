@@ -7,9 +7,16 @@
 
 body{
   width: 90%;
-  padding: 7px;
   margin: 0 5%;
   border: 3px solid black;
+}
+
+h1{
+  padding-left: 10px;
+}
+
+h2{
+  text-align: center;
 }
 
 a{
@@ -92,6 +99,7 @@ figure{
   list-style: none;
   padding: 0;
   text-align: center;
+  justify-items: center;
 }
 
 .upgrades li{

@@ -64,6 +64,7 @@ figure{
 
 .navigation{
   background-color: black;
+  color: white;
 }
 
 .navigation ul{
@@ -77,6 +78,10 @@ figure{
 .navigation li{
   padding: 10px;
   font-size: x-large;
+}
+
+.navigation a{
+  color: white;
 }
 
 .review{

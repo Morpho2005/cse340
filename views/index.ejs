@@ -1,4 +1,9 @@
-<h1>Welcome to CSE Motors</h1>
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
 <img class="display" src="/images/vehicles/delorean.jpg" alt="an image of a car modeled after the Delorean from the movie Back to the Future">
 <section class="info">
     <h2>Replica Delorean</h2>

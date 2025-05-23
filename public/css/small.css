@@ -1,5 +1,9 @@
 @media screen and (max-width: 640px) {
 
+    html{
+        background: none;
+    }
+
     body{
         width: 100%;
         margin: 0;
@@ -26,8 +30,13 @@
         margin: 0;
     }
 
-    .navigation li{
-        font-size: 100%;
+    .navigation li {
+        padding: 1%;
+    }
+
+    .navigation li a{
+        font-size: small;
+        padding: 1%;
     }
 
     .upgrades{
@@ -40,5 +49,27 @@
 
     .upgrades li figure{
         width: 100%;
+    }
+
+    #inv-display {
+        border-bottom: 3px solid black;
+    }
+
+    #inv-display li{
+        grid-template-columns: 1fr;
+    }
+
+    #inv-display img{
+        width: 100%;
+    }
+
+    #inv-detail li{
+        padding: 0;
+        justify-content: center;
+        grid-template-columns: 1fr;
+    }
+
+    #inv-detail img{
+        width: 90%;
     }
 }

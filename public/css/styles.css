@@ -1,14 +1,38 @@
 /******* Change Box Model ***************/
+:root{
+  --header-font: "Oswald";
+  --body-font: "Roboto";
+  --square-size: 30px;
+}
+
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
 
+html{
+    background-image:
+      linear-gradient(45deg, #000 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #000 75%),
+      linear-gradient(45deg, transparent 75%, #000 75%),
+      linear-gradient(45deg, #000 25%, #fff 25%);    
+
+    background-size:100px 100px;       
+
+    background-position:0 0, 0 0, -50px -50px, 50px 50px;
+}
+
 body{
+  background-color: white;
+  font-family: var(--body-font);
   width: 90%;
   margin: 0 5%;
   border: 3px solid black;
+}
+
+header{
+  font-family: var(--header-font);
 }
 
 h1{
@@ -40,6 +64,9 @@ figure{
   grid-template-columns: 1fr 1fr;
 }
 
+.description{
+  font-weight: bold;
+}
 
 .display{
   position: absolute; 
@@ -63,21 +90,25 @@ figure{
 }
 
 .navigation{
+  font-family: var(--header-font);
   background-color: black;
   color: white;
 }
 
 .navigation ul{
   list-style: none;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   color: white;
   padding: 0;
+  width: 100%;
 }
 
 .navigation li{
+  text-align: center;
+  width: 100%;
+  font-size: 100%;
   padding: 10px;
-  font-size: x-large;
 }
 
 .navigation a{
@@ -127,4 +158,61 @@ figure{
 
 #tools {
   padding: 10px;
+}
+
+#inv-display {
+  list-style: none;
+  padding: 0;
+}
+
+#inv-display li{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 3px solid black;
+  padding: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+#inv-detail {
+  list-style: none;
+  padding: 0;
+}
+
+#inv-detail li{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 3px solid black;
+  padding: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+#inv-detail img{
+  padding: 10px;
+  width: 100%;
+}
+
+#inv-detail div{
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+#inv-detail button{
+  margin: 10px;
+  padding: 10px;
+  width: 60%;
+  font-size: 160%;
+}
+
+#inv-detail div ul{
+  padding: 0;
+  margin: 0 20px;
+  border-top: 3px solid black;
+}
+
+#inv-detail div ul li{
+  grid-template-columns: 1fr;
+  padding: 3px;
+  border: none;
 }

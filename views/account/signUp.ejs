@@ -1,0 +1,16 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<form action="/account/signUp" method="post">
+    <fieldset>
+        <label>First Name: <input required type="text" name="account_firstname"></label>
+        <label>Last Name: <input required type="text" name="account_lastname"></label>
+        <label>Email: <input required type="email" name="account_email"></label>
+        <label>Password: <input required type="password" name="account_password"></label>
+        <input type="submit" value="Sign-up">
+    </fieldset>
+    <p>Already have an account? <a href="/account/login">Log-in</a></p>
+</form>

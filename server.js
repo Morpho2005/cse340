@@ -10,9 +10,37 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
+const session = require("express-session")
+const pool = require('./database/')
+const bodyParser = require("body-parser")
+
+/* ***********************
+ * Middleware
+ * ************************/
+ app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 /* ***********************
  * View Engine and Templates
@@ -24,12 +52,15 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(static)
+app.use(static);
 // index route
-app.get("/", utilities.handleErrors(baseController.buildHome))
+app.get("/", utilities.handleErrors(baseController.buildHome));
 
-// Inventory routes
-app.use("/inv", inventoryRoute)
+// Inventory route
+app.use("/inv", inventoryRoute);
+
+// Account route
+app.use("/account", accountRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

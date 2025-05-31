@@ -8,8 +8,8 @@
     <fieldset>
         <label>First Name: <input required type="text" name="account_firstname"></label>
         <label>Last Name: <input required type="text" name="account_lastname"></label>
-        <label>Email: <input required type="email" name="account_email"></label>
-        <label>Password: <input required type="password" name="account_password"></label>
+        <label>Email: <input required type="email" name="account_email" placeholder="Enter a valid email address"></label>
+        <label>Password: <input required type="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
         <input type="submit" value="Sign-up">
     </fieldset>
     <p>Already have an account? <a href="/account/login">Log-in</a></p>

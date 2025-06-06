@@ -4,7 +4,7 @@
   res.redirect('/')
 } %>
 
-<form action="/">
+<form id="loginForm" action="/account/login" method="post">
     <fieldset>
         <label>Email: <input required type="email" name="account_email" placeholder="Enter a valid email address"></label>
         <label>Password: <input required type="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>

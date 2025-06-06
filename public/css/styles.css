@@ -89,6 +89,10 @@ input[type="submit" i]{
   justify-self: center;
 }
 
+.signUp input:required:invalid, input:focus:invalid {
+  background-color: rgba(255, 141, 141, 0.411);
+}
+
 p a{
   padding: 0;
 }

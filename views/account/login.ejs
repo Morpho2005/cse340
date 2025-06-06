@@ -7,7 +7,7 @@
 <form action="/">
     <fieldset>
         <label>Email: <input required type="email" name="account_email" placeholder="Enter a valid email address"></label>
-        <label>Password: <input required type="password" name="account_password"></label>
+        <label>Password: <input required type="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
         <input type="submit" value="Login">
     </fieldset>
     <p>No account? <a href="/account/signUp">Sign-up</a></p>

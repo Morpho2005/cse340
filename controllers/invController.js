@@ -35,4 +35,55 @@ invCont.buildByInvId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build management view
+ * ************************** */
+invCont.buildManagement = async function (req, res, next) {
+  let nav = await utilities.getNav()
+    res.render("./inventory/management", {
+      title: "management",
+      nav,
+    })
+}
+
+/* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.buildAddClass = async function (req, res, next) {
+  let nav = await utilities.getNav()
+    res.render("./inventory/add-classification", {
+      title: "add classification",
+      nav,
+      error: null
+    })
+}
+
+/* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.postClass = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+
+  const classResult = await invModel.buildClass(classification_name)
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'ve signed up ${account_firstname}. Please log in.`
+    )
+    res.status(201).render("inv/", {
+      title: "Management",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the registration failed.")
+    res.status(501).render("/inv/add-class", {
+      title: "add classification",
+      nav,
+      errors: null,
+    })
+  }
+}
+
   module.exports = invCont

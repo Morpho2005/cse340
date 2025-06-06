@@ -42,6 +42,12 @@ a{
   padding: 10px;
 }
 
+button{
+  padding: 10px;
+  background-color: var(--card-background);
+  border-radius: 1rem;
+}
+
 figure{
   margin: 0;
 }

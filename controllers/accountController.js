@@ -66,8 +66,9 @@ async function signUpAccount(req, res) {
   } else {
     req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/signUp", {
-      title: "Registration",
+      title: "sign up",
       nav,
+      errors: null,
     })
   }
 }

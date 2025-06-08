@@ -54,12 +54,12 @@ invCont.buildAddClass = async function (req, res, next) {
     res.render("./inventory/add-classification", {
       title: "add classification",
       nav,
-      error: null
+      errors: null
     })
 }
 
 /* ***************************
- *  Build add classification view
+ *  Add classification
  * ************************** */
 invCont.postClass = async function (req, res) {
   let nav = await utilities.getNav()
@@ -67,19 +67,61 @@ invCont.postClass = async function (req, res) {
 
   const classResult = await invModel.buildClass(classification_name)
 
-  if (regResult) {
+  if (classResult) {
     req.flash(
       "notice",
-      `Congratulations, you\'ve signed up ${account_firstname}. Please log in.`
+      `succesfully added ${classification_name} classification to database`
     )
-    res.status(201).render("inv/", {
+    res.status(201).render("./inventory/management", {
       title: "Management",
       nav,
     })
   } else {
-    req.flash("notice", "Sorry, the registration failed.")
-    res.status(501).render("/inv/add-class", {
+    req.flash("notice", "Sorry, the system failed to upload the classification")
+    res.status(501).render("./inventory/add-classification", {
       title: "add classification",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+/* ***************************
+ *  Build add inventory view
+ * ************************** */
+invCont.buildAddInv = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  let classlist = await utilities.buildClassificationList()
+    res.render("./inventory/add-inventory", {
+      title: "add inventory",
+      nav,
+      classlist,
+      errors: null
+    })
+}
+
+/* ***************************
+ *  Add inventory
+ * ************************** */
+invCont.postInv = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id } = req.body
+
+  const postResult = await invModel.addInv(inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id)
+
+  if (postResult) {
+    req.flash(
+      "notice",
+      `succesfully added ${inv_make} ${inv_model} ${inv_year} to ${classification_id} inventory`
+    )
+    res.status(201).render("./inventory/management", {
+      title: "Management",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the system failed to upload the inventory.")
+    res.status(501).render("./invetory/add-inventory", {
+      title: "add invetory",
       nav,
       errors: null,
     })

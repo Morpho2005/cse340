@@ -1,0 +1,29 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form action="">
+    <fieldset>
+        <label>Make: <input type="text" name="inv_make" value="<%= locals.inv_make %>" required></label>
+        <label>Model: <input type="text" name="inv_model" value="<%= locals.inv_model %>" required></label>
+        <label>Year: <input type="number" min="1900" max="2099" step="1" name="inv_year" value="<%= locals.inv_year %>" required></label>
+        <label>Description: <textarea name="inv_description" value="<%= locals.inv_description %>" required></textarea></label>
+        <label>Price: <input type="number" max="999999999" name="inv_price" value="<%= locals.inv_price %>" required></label>
+        <label>Miles: <input type="number" name="inv_miles" value="<%= locals.inv_miles %>" required></label>
+        <label>Color: <input type="text" name="inv_color" value="<%= locals.inv_color %>" required></label>
+        <label>Classification: <%- classlist %></label>
+        <input type="text" value="images/vehicles/no-image.png" name="inv_image" hidden>
+        <input type="text" value="images/vehicles/no-image-tn.png" name="inv_thumbnail" hidden>
+        <input type="submit" value="submit">
+    </fieldset>
+</form>

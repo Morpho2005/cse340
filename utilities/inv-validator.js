@@ -54,7 +54,6 @@ validate.inventoryRules = () => {
       .trim()
       .escape()
       .notEmpty()
-      .isLength({ min: 1 })
       .withMessage("Please provide a make."), // on error this message is sent.
 
     // model is required and must be string
@@ -62,7 +61,6 @@ validate.inventoryRules = () => {
       .trim()
       .escape()
       .notEmpty()
-      .isLength({ min: 2 })
       .withMessage("Please provide a model."), // on error this message is sent.
   
     // year must be a four digit number and is required
@@ -71,14 +69,12 @@ validate.inventoryRules = () => {
       .escape()
       .notEmpty()
       .isLength(4)
-      .isInt()
       .withMessage("Please provide a year."),
   
     // description is required
     body("inv_description")
       .trim()
       .notEmpty()
-      .isLength({min: 5})
       .withMessage("Please provide a description."),
 
     // price must be a number with 9 digits or less
@@ -86,7 +82,6 @@ validate.inventoryRules = () => {
       .trim()
       .notEmpty()
       .isLength({max: 9})
-      .isInt()
       .withMessage("Please provide a price."),
       
     // miles must be a number
@@ -99,9 +94,14 @@ validate.inventoryRules = () => {
     // color must be a string
     body("inv_color")
       .trim()
-      .escape()
       .notEmpty()
       .withMessage("Please provide a color."),
+
+    // classification must be selected
+    body("classification_id")
+      .trim()
+      .notEmpty()
+      .withMessage("a classification must be chosen")
   ]
 }
 
@@ -109,23 +109,24 @@ validate.inventoryRules = () => {
  * Check data and return errors or continue
  * ***************************** */
 validate.checkInvData = async (req, res, next) => {
-  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id } = req.body
+  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    let classlist = await utilities.buildClassificationList()
     res.render("./inventory/add-inventory", {
-      errors,
-      title: "add inventory",
       nav,
+      title: "add inventory",
+      classlist,
+      errors,
       inv_make,
       inv_model,
       inv_year,
       inv_description,
       inv_price,
       inv_miles,
-      inv_color,
-      classification_id,
+      inv_color
     })
     return
   }

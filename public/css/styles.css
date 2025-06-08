@@ -99,6 +99,7 @@ textarea{
   padding: 8px;
   width: 100%;
   border-radius: .5rem;
+  border: 2px inset gray;
 }
 
 .signUp input:required:invalid, input:focus:invalid {

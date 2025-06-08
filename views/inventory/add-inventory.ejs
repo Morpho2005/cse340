@@ -12,7 +12,9 @@
  </ul>
 <% } %>
 
-<form action="">
+<%- messages() %>
+
+<form action="/inv/add-inv" method="post">
     <fieldset>
         <label>Make: <input type="text" name="inv_make" value="<%= locals.inv_make %>" required></label>
         <label>Model: <input type="text" name="inv_model" value="<%= locals.inv_model %>" required></label>
@@ -22,8 +24,6 @@
         <label>Miles: <input type="number" name="inv_miles" value="<%= locals.inv_miles %>" required></label>
         <label>Color: <input type="text" name="inv_color" value="<%= locals.inv_color %>" required></label>
         <label>Classification: <%- classlist %></label>
-        <input type="text" value="images/vehicles/no-image.png" name="inv_image" hidden>
-        <input type="text" value="images/vehicles/no-image-tn.png" name="inv_thumbnail" hidden>
         <input type="submit" value="submit">
     </fieldset>
 </form>

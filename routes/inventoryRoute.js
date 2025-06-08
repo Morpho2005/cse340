@@ -29,6 +29,11 @@ router.post(
 router.get("/add-inv", invController.buildAddInv)
 
 // Route to add a new item to inventory
-router.post("/add-inv", invController.postInv)
+router.post(
+    "/add-inv",
+    validator.inventoryRules(),
+    validator.checkInvData,
+    utilities.handleErrors(invController.postInv),
+)
 
 module.exports = router;

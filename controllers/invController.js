@@ -112,7 +112,7 @@ invCont.postInv = async function (req, res) {
   if (postResult) {
     req.flash(
       "notice",
-      `succesfully added ${inv_make} ${inv_model} ${inv_year} to ${classification_id} inventory`
+      `succesfully added ${inv_make} ${inv_model} ${inv_year} to inventory`
     )
     res.status(201).render("./inventory/management", {
       title: "Management",
@@ -120,7 +120,7 @@ invCont.postInv = async function (req, res) {
     })
   } else {
     req.flash("notice", "Sorry, the system failed to upload the inventory.")
-    res.status(501).render("./invetory/add-inventory", {
+    res.status(501).render("./inventory/add-inventory", {
       title: "add invetory",
       nav,
       errors: null,

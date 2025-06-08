@@ -12,6 +12,8 @@
  </ul>
 <% } %>
 
+<%- messages() %>
+
 <form action="/inv/add-class" method="post">
     <fieldset>
         <label>Classification Name: <input required type="text" name="classification_name" pattern="[A-Za-z0-9\s]+$"></label>

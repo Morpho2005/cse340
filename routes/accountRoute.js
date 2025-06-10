@@ -12,7 +12,7 @@ router.get("/login", accountController.buildLogin);
 router.get("/signUp", accountController.buildSignUp)
 
 // route for account management view
-router.get('/', accountController.buildManagement)
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 router.post(
   "/signUp",

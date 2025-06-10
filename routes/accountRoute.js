@@ -11,19 +11,22 @@ router.get("/login", accountController.buildLogin);
 // Route to build sing up view
 router.get("/signUp", accountController.buildSignUp)
 
+// route for account management view
+router.get('/', accountController.buildManagement)
+
 router.post(
-    "/signUp",
-    regValidate.registationRules(),
-    regValidate.checkRegData,
-    utilities.handleErrors(accountController.signUpAccount)
+  "/signUp",
+  regValidate.registationRules(),
+  regValidate.checkRegData,
+  utilities.handleErrors(accountController.signUpAccount)
 )
 
 // Process the login attempt
 router.post(
   "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
 )
 
 module.exports = router;

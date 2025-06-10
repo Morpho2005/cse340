@@ -4,6 +4,14 @@
   res.redirect('/')
 } %>
 
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
 <form id="loginForm" action="/account/login" method="post">
     <fieldset>
         <label>Email: <input required type="email" name="account_email" placeholder="Enter a valid email address"></label>

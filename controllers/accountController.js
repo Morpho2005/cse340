@@ -64,6 +64,7 @@ async function signUpAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
+      errors: null,
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
@@ -123,7 +124,7 @@ async function accountLogin(req, res) {
 async function buildManagement(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/management", {
-    title: "SignUp",
+    title: "management",
     nav,
   })
 }

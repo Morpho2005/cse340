@@ -109,12 +109,12 @@ validate.inventoryRules = () => {
  * Check data and return errors or continue
  * ***************************** */
 validate.checkInvData = async (req, res, next) => {
-  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color } = req.body
+  const { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    let classlist = await utilities.buildClassificationList()
+    let classlist = await utilities.buildClassificationList(classification_id)
     res.render("./inventory/add-inventory", {
       nav,
       title: "add inventory",
@@ -126,7 +126,7 @@ validate.checkInvData = async (req, res, next) => {
       inv_description,
       inv_price,
       inv_miles,
-      inv_color
+      inv_color,
     })
     return
   }

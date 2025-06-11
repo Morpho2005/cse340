@@ -40,9 +40,11 @@ invCont.buildByInvId = async function (req, res, next) {
  * ************************** */
 invCont.buildManagement = async function (req, res, next) {
   let nav = await utilities.getNav()
+  const classificationSelect = await utilities.buildClassificationList()
     res.render("./inventory/management", {
       title: "management",
       nav,
+      classificationSelect
     })
 }
 
@@ -126,6 +128,48 @@ invCont.postInv = async function (req, res) {
       errors: null,
     })
   }
+}
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
+/* ***************************
+ *  Return information for editing inventory data
+ * ************************** */
+invCont.getEditInventory = async (req, res, next) => {
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const data = await invModel.getInventoryByInvId(inv_id)
+  const invData = data[0]
+  const classlist = await utilities.buildClassificationList(parseInt(invData.classification_id))
+  const itemName = `${invData.inv_make} ${invData.inv_model}`
+  res.render("./inventory/edit-inventory", {
+    title: `edit ${itemName}`,
+    nav,
+    classlist,
+    errors: null,
+    inv_id: invData.inv_id,
+    inv_make: invData.inv_make,
+    inv_model: invData.inv_model,
+    inv_year: invData.inv_year,
+    inv_description: invData.inv_description,
+    inv_image: invData.inv_image,
+    inv_thumbnail: invData.inv_thumbnail,
+    inv_price: invData.inv_price,
+    inv_miles: invData.inv_miles,
+    inv_color: invData.inv_color,
+    classification_id: invData.classification_id
+  })
 }
 
   module.exports = invCont

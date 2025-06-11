@@ -24,7 +24,7 @@ validate.classificationRules = () => {
 }
 
 /* ******************************
- * Check data and return errors or continue
+ * Check class data and return errors or continue
  * ***************************** */
 validate.checkClassData = async (req, res, next) => {
   const { classification_name} = req.body
@@ -124,6 +124,37 @@ validate.checkInvData = async (req, res, next) => {
       inv_model,
       inv_year,
       inv_description,
+      inv_price,
+      inv_miles,
+      inv_color,
+    })
+    return
+  }
+  next()
+}
+
+/* ******************************
+ * Check update data and return errors or continue
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    let classlist = await utilities.buildClassificationList(classification_id)
+    res.render("./inventory/edit-inventory", {
+      nav,
+      title: `edit ${inv_make} ${inv_model}`,
+      classlist,
+      errors,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
       inv_price,
       inv_miles,
       inv_color,

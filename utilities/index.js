@@ -165,6 +165,33 @@ Util.getTools = (req, res) => {
   return tools
 }
 
+/* ************************
+ * checks account type
+ ************************** */
+Util.checkAccount = (req, res, next) => {
+  if (res.locals.accountData.account_type  == 'Client') {
+    req.flash("notice", "you do not have access")
+    return res.redirect("/")
+  } else {
+    next()
+  }
+}
+
+/* ************************
+ * Constructs the tool HTML link
+ ************************** */
+Util.makeGreeting = (req, res) => {
+  let greeting
+  if (res.locals.accountData.account_type  == 'Client') {
+    greeting = `<h2>Hello ${res.locals.accountData.account_firstname}</h2>`
+  } else {
+    greeting = `<h2>Hello ${res.locals.accountData.account_firstname}</h2>`
+    greeting += `<h3> inventory management </h3>`
+    greeting += `<a href="/inv"><button>manage Inventory</button></a>`
+  }
+  return greeting
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

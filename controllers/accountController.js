@@ -9,9 +9,11 @@ require("dotenv").config()
 * *************************************** */
 async function buildLogin(req, res, next) {
   let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
   res.render("account/login", {
     title: "Login",
     nav,
+    tool,
     errors: null,
   })
 }
@@ -21,9 +23,11 @@ async function buildLogin(req, res, next) {
 * *************************************** */
 async function buildSignUp(req, res, next) {
   let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
   res.render("account/signUp", {
     title: "SignUp",
     nav,
+    tool,
     errors: null,
   })
 }
@@ -33,6 +37,7 @@ async function buildSignUp(req, res, next) {
 * *************************************** */
 async function signUpAccount(req, res) {
   let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
   const { account_firstname, account_lastname, account_email, account_password } = req.body
 
   // Hash the password before storing
@@ -45,6 +50,7 @@ async function signUpAccount(req, res) {
     res.status(500).render("account/signUp", {
       title: "SignUp",
       nav,
+      tool,
       errors: null,
     })
   }
@@ -64,6 +70,7 @@ async function signUpAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
+      tool,
       errors: null,
     })
   } else {
@@ -71,6 +78,7 @@ async function signUpAccount(req, res) {
     res.status(501).render("account/signUp", {
       title: "sign up",
       nav,
+      tool,
       errors: null,
     })
   }
@@ -81,6 +89,7 @@ async function signUpAccount(req, res) {
  * ************************************ */
 async function accountLogin(req, res) {
   let nav = await utilities.getNav()
+  const tool = '<a title="Click to log out" href="/account/logout">Log Out</a><a title="Click to view account" href="/account">Welcome Back</a>'
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
   if (!accountData) {
@@ -88,6 +97,7 @@ async function accountLogin(req, res) {
     res.status(400).render("account/login", {
       title: "Login",
       nav,
+      tool,
       errors: null,
       account_email,
     })
@@ -109,6 +119,7 @@ async function accountLogin(req, res) {
       res.status(400).render("account/login", {
         title: "Login",
         nav,
+        tool,
         errors: null,
         account_email,
       })
@@ -123,10 +134,147 @@ async function accountLogin(req, res) {
 * *************************************** */
 async function buildManagement(req, res, next) {
   let nav = await utilities.getNav()
+  let tool = utilities.getTools(req, res)
+  let greeting = utilities.makeGreeting(req, res)
   res.render("account/management", {
-    title: "management",
+    title: "Account",
     nav,
+    tool,
+    greeting
   })
 }
 
-module.exports = { buildLogin, buildSignUp, signUpAccount, accountLogin, buildManagement }
+/* ****************************************
+*  Deliver logout view
+* *************************************** */
+async function buildLogout(req, res, next) {
+  let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
+  res.render("account/logout", {
+    title: "Logout",
+    nav,
+    tool,
+    errors: null,
+  })
+}
+
+/* ****************************************
+ *  Process logout request
+ * ************************************ */
+async function accountLogout(req, res) {
+  res.clearCookie("jwt")
+  if (!res.cookie.jwt) {
+    res.redirect('/')
+  } else {
+    let nav = await utilities.getNav()
+    let tool = utilities.getTools(req, res)
+    req.flash("message notice", "logout process failed.")
+    res.render("account/logout", {
+      title: "Logout",
+      nav,
+      tool,
+      errors: null,})
+  }
+}
+
+/* ****************************************
+*  Deliver update view
+* *************************************** */
+async function buildUpdate(req, res, next) {
+  let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
+  account_id = res.locals.accountData.account_id
+  const data = await accountModel.getAccountById(account_id)
+
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    tool,
+    account_id: data.account_id,
+    account_firstname: data.account_firstname,
+    account_lastname: data.account_lastname,
+    account_email: data.account_email,
+    errors: null
+  })
+}
+
+/* ***************************
+ *  Update Account Name
+ * ************************** */
+async function updateName(req, res, next) {
+  let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
+  const {
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+  } = req.body
+  const updateResult = await accountModel.updateName(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+  )
+
+  if (updateResult) {
+    req.flash("notice", `The name update was successfully updated.`)
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update", {
+    title: "Update Account",
+    nav,
+    tool,
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+    errors: null
+    })
+  }
+}
+
+/* ***************************
+ *  Update Account Password
+ * ************************** */
+async function updatePassword(req, res, next) {
+  let nav = await utilities.getNav()
+  const tool = utilities.getTools(req, res)
+  const {
+    account_id,
+    account_password
+  } = req.body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the update.')
+    res.status(500).render("account/update", {
+    title: "Update Account",
+    nav,
+    tool,
+    account_id,
+    errors: null
+    })
+  }
+
+  const updateResult = await accountModel.updatePassword(
+    account_id,
+    hashedPassword
+  )
+
+  if (updateResult) {
+    req.flash("notice", `The password update was successfully updated.`)
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.redirect("/account/update")
+  }
+}
+
+
+module.exports = { buildLogin, buildSignUp, signUpAccount, accountLogin, buildManagement, buildLogout, accountLogout, buildUpdate, updateName, updatePassword }

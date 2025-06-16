@@ -29,4 +29,33 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
+//route for logout view
+router.get("/logout",
+  utilities.checkLogin,
+  accountController.buildLogout)
+
+// Process the logout attempt
+router.post(
+  "/logout",
+  utilities.handleErrors(accountController.accountLogout)
+)
+
+// route for update view
+router.get("/update",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdate)
+)
+
+// route for updating names
+router.post("/update/name",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.updateName)
+)
+
+// route for updating passwords
+router.post("/update/password",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.updatePassword)
+)
+
 module.exports = router;

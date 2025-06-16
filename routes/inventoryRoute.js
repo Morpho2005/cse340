@@ -12,10 +12,10 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:invId", invController.buildByInvId)
 
 // Route to build management view
-router.get("/", invController.buildManagement)
+router.get("/", utilities.checkLogin, invController.buildManagement)
 
 // Route to build add classification view
-router.get("/add-class", invController.buildAddClass)
+router.get("/add-class", utilities.checkLogin, invController.buildAddClass)
 
 // Route for post new classifications
 router.post(
@@ -26,7 +26,7 @@ router.post(
 )
 
 // Route to build add inventory view
-router.get("/add-inv", invController.buildAddInv)
+router.get("/add-inv", utilities.checkLogin, invController.buildAddInv)
 
 // Route to add a new item to inventory
 router.post(
@@ -40,13 +40,13 @@ router.post(
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // route for modifying inventory items
-router.get("/edit/:inv_id", utilities.handleErrors(invController.getEditInventory))
+router.get("/edit/:inv_id", utilities.checkLogin, utilities.handleErrors(invController.getEditInventory))
 
 // route for confirming the modification of inventory items
 router.post("/update", utilities.handleErrors(invController.updateInventory))
 
 // route for deleting inventory items
-router.get("/delete/:inv_id", utilities.handleErrors(invController.getDeleteInventory))
+router.get("/delete/:inv_id", utilities.checkLogin, utilities.handleErrors(invController.getDeleteInventory))
 
 // route for confirming the deletion of inventory items
 router.post("/delete", utilities.handleErrors(invController.deleteInventory))

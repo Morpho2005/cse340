@@ -151,6 +151,20 @@ Util.checkLogin = (req, res, next) => {
   }
 }
 
+/* ************************
+ * Constructs the tool HTML link
+ ************************** */
+Util.getTools = (req, res) => {
+  let tools
+  if (res.locals.loggedin) {
+    tools = '<a title="Click to log out" href="/account/logout">Log Out</a>'
+    tools += '<a title="Click to view account" href="/account">Welcome Back</a>'
+  } else {
+    tools = '<a title="Click to log in" href="/account/login">My Account</a>'
+  }
+  return tools
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

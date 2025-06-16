@@ -31,7 +31,7 @@ invCont.buildByInvId = async function (req, res, next) {
   res.render("./inventory/detail", {
     title: modelName,
     nav,
-    grid
+    grid,
   })
 }
 
@@ -106,6 +106,7 @@ invCont.buildAddInv = async function (req, res, next) {
  *  Add inventory
  * ************************** */
 invCont.postInv = async function (req, res) {
+  let nav = await utilities.getNav()
   const { 
     inv_make, 
     inv_model, 

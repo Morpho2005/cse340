@@ -1,0 +1,15 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+
+Classification: <%- classlist %>
+<a href="" id="classLink"><button id="classButton" type="submit" disabled>Go</button></a>
+
+<%- grid %>
+
+
+<script src="/js/all-inventory.js"></script>

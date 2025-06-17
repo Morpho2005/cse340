@@ -6,16 +6,19 @@ const validator = require("../utilities/inv-validator")
 const utilities = require("../utilities")
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classification_id", invController.buildByClassificationId);
+
+// Route to build inventory all classification view
+router.get("/type", utilities.handleErrors(invController.buildAllClassificationId));
 
 // Route to build inventory by detail view
 router.get("/detail/:invId", invController.buildByInvId)
 
 // Route to build management view
-router.get("/", utilities.checkLogin, utilities.checkAccount, invController.buildManagement)
+router.get("/", utilities.checkLogin, utilities.checkAccount, utilities.handleErrors(invController.buildManagement))
 
 // Route to build add classification view
-router.get("/add-class", utilities.checkLogin, invController.buildAddClass)
+router.get("/add-class", utilities.checkLogin, utilities.handleErrors(invController.buildAddClass))
 
 // Route for post new classifications
 router.post(
@@ -26,7 +29,7 @@ router.post(
 )
 
 // Route to build add inventory view
-router.get("/add-inv", utilities.checkLogin, utilities.checkAccount, invController.buildAddInv)
+router.get("/add-inv", utilities.checkLogin, utilities.checkAccount, utilities.handleErrors(invController.buildAddInv))
 
 // Route to add a new item to inventory
 router.post(

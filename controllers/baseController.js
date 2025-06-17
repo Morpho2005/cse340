@@ -3,8 +3,7 @@ const baseController = {}
 
 baseController.buildHome = async function(req, res){
   const tool = utilities.getTools(req, res)
-  const nav = await utilities.getNav()
-  res.render("index", {title: "Home", nav, tool})
+  res.render("index", {title: "Home", tool})
 }
 
 module.exports = baseController

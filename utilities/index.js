@@ -157,10 +157,11 @@ Util.checkLogin = (req, res, next) => {
 Util.getTools = (req, res) => {
   let tools
   if (res.locals.loggedin) {
-    tools = '<a title="Click to log out" href="/account/logout">Log Out</a>'
-    tools += '<a title="Click to view account" href="/account">Welcome Back</a>'
+    tools = '<li><a title="Click to view account" href="/account">Welcome Back</a></li>'
+    tools += '<li><a title="Click to log out" href="/account/logout">Log Out</a></li>'
   } else {
-    tools = '<a title="Click to log in" href="/account/login">My Account</a>'
+    tools = '<li></li>'
+    tools += '<li><a title="Click to log in" href="/account/login">My Account</a></li>'
   }
   return tools
 }

@@ -133,5 +133,20 @@ async function deleteInventory(
   }
 }
 
+/* ***************************
+ *  Get all inventory items classification_ids
+ * ************************** */
+async function getInventoryClassificationIds() {
+  try {
+    const data = await pool.query(
+      `SELECT classification_id FROM public.classification`
+    )
+    console.log (data.rows)
+    return data.rows
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error)
+  }
+}
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInvId, buildClass, checkExistingClass, addInv, updateInventory, deleteInventory }
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInvId, buildClass, checkExistingClass, addInv, updateInventory, deleteInventory, getInventoryClassificationIds }

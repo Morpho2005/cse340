@@ -8,11 +8,9 @@ require("dotenv").config()
 *  Deliver login view
 * *************************************** */
 async function buildLogin(req, res, next) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   res.render("account/login", {
     title: "Login",
-    nav,
     tool,
     errors: null,
   })
@@ -22,11 +20,9 @@ async function buildLogin(req, res, next) {
 *  Deliver sign up view
 * *************************************** */
 async function buildSignUp(req, res, next) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   res.render("account/signUp", {
     title: "SignUp",
-    nav,
     tool,
     errors: null,
   })
@@ -36,7 +32,6 @@ async function buildSignUp(req, res, next) {
 *  Process Registration
 * *************************************** */
 async function signUpAccount(req, res) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   const { account_firstname, account_lastname, account_email, account_password } = req.body
 
@@ -49,7 +44,6 @@ async function signUpAccount(req, res) {
     req.flash("notice", 'Sorry, there was an error processing the registration.')
     res.status(500).render("account/signUp", {
       title: "SignUp",
-      nav,
       tool,
       errors: null,
     })
@@ -69,7 +63,6 @@ async function signUpAccount(req, res) {
     )
     res.status(201).render("account/login", {
       title: "Login",
-      nav,
       tool,
       errors: null,
     })
@@ -77,7 +70,6 @@ async function signUpAccount(req, res) {
     req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/signUp", {
       title: "sign up",
-      nav,
       tool,
       errors: null,
     })
@@ -88,15 +80,13 @@ async function signUpAccount(req, res) {
  *  Process login request
  * ************************************ */
 async function accountLogin(req, res) {
-  let nav = await utilities.getNav()
-  const tool = '<a title="Click to log out" href="/account/logout">Log Out</a><a title="Click to view account" href="/account">Welcome Back</a>'
+  const tool = utilities.getTools(req, res)
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
   if (!accountData) {
     req.flash("notice", "Please check your credentials and try again.")
     res.status(400).render("account/login", {
       title: "Login",
-      nav,
       tool,
       errors: null,
       account_email,
@@ -118,7 +108,6 @@ async function accountLogin(req, res) {
       req.flash("message notice", "Please check your credentials and try again.")
       res.status(400).render("account/login", {
         title: "Login",
-        nav,
         tool,
         errors: null,
         account_email,
@@ -133,12 +122,10 @@ async function accountLogin(req, res) {
 *  Deliver sign up view
 * *************************************** */
 async function buildManagement(req, res, next) {
-  let nav = await utilities.getNav()
   let tool = utilities.getTools(req, res)
   let greeting = utilities.makeGreeting(req, res)
   res.render("account/management", {
     title: "Account",
-    nav,
     tool,
     greeting
   })
@@ -148,11 +135,9 @@ async function buildManagement(req, res, next) {
 *  Deliver logout view
 * *************************************** */
 async function buildLogout(req, res, next) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   res.render("account/logout", {
     title: "Logout",
-    nav,
     tool,
     errors: null,
   })
@@ -166,12 +151,10 @@ async function accountLogout(req, res) {
   if (!res.cookie.jwt) {
     res.redirect('/')
   } else {
-    let nav = await utilities.getNav()
     let tool = utilities.getTools(req, res)
     req.flash("message notice", "logout process failed.")
     res.render("account/logout", {
       title: "Logout",
-      nav,
       tool,
       errors: null,})
   }
@@ -181,14 +164,12 @@ async function accountLogout(req, res) {
 *  Deliver update view
 * *************************************** */
 async function buildUpdate(req, res, next) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   account_id = res.locals.accountData.account_id
   const data = await accountModel.getAccountById(account_id)
 
   res.render("account/update", {
     title: "Update Account",
-    nav,
     tool,
     account_id: data.account_id,
     account_firstname: data.account_firstname,
@@ -202,7 +183,6 @@ async function buildUpdate(req, res, next) {
  *  Update Account Name
  * ************************** */
 async function updateName(req, res, next) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   const {
     account_id,
@@ -224,7 +204,6 @@ async function updateName(req, res, next) {
     req.flash("notice", "Sorry, the update failed.")
     res.status(501).render("account/update", {
     title: "Update Account",
-    nav,
     tool,
     account_id,
     account_firstname,
@@ -239,7 +218,6 @@ async function updateName(req, res, next) {
  *  Update Account Password
  * ************************** */
 async function updatePassword(req, res, next) {
-  let nav = await utilities.getNav()
   const tool = utilities.getTools(req, res)
   const {
     account_id,
@@ -255,7 +233,6 @@ async function updatePassword(req, res, next) {
     req.flash("notice", 'Sorry, there was an error processing the update.')
     res.status(500).render("account/update", {
     title: "Update Account",
-    nav,
     tool,
     account_id,
     errors: null

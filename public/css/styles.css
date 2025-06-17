@@ -120,6 +120,11 @@ p a{
   padding: 0;
 }
 
+.classification{
+  padding-top: 10px;
+  border-top: 3px solid black;
+}
+
 .detail{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -159,7 +164,7 @@ p a{
 .navigation ul{
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   color: white;
   padding: 0;
   width: 100%;
@@ -220,6 +225,10 @@ p a{
 
 .upgrades li a{
   text-decoration: underline;
+}
+
+#classButton {
+  padding: .5rem 2rem;
 }
 
 #tools {

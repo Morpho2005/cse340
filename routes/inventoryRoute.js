@@ -9,7 +9,7 @@ const utilities = require("../utilities")
 router.get("/type/:classification_id", invController.buildByClassificationId);
 
 // Route to build inventory all classification view
-router.get("/type", utilities.handleErrors(invController.buildAllClassificationId));
+router.get("/all", utilities.handleErrors(invController.buildAllClassificationId));
 
 // Route to build inventory by detail view
 router.get("/detail/:invId", invController.buildByInvId)
